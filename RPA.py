@@ -10,7 +10,7 @@ def ler_tarefas(caminhotarefa):
     return tarefa
 
 
-def criar_arquivo(nome_arquivo):
+def validar_nome(nome_arquivo):
     if len(nome_arquivo) < 1:
         return "padrao"
     caracteres_invalidos = "/ * ? < > | :".split()
@@ -22,11 +22,14 @@ def criar_arquivo(nome_arquivo):
 
 
 def executar_tarefa(valor, nomeTarefa, nome_arquivo):
+    time.sleep(5)
     if nomeTarefa == 'Escrever':
-        with open(nome_arquivo, "w") as arquivo:
-            arquivo.write(valor)
-
-        time.sleep(5)
+        try:
+            with open(nome_arquivo, "w") as arquivo:
+                arquivo.write(valor)
+            return True
+        except:
+            return False
 
 
 def abrir_arquivo(nome_arquivo):
@@ -53,27 +56,24 @@ def automacao(caminhoTarefa, caminhoRelatorio):
 
         try:
             if nomeTarefa == 'ValidarNome':
-                nome_arquivo = criar_arquivo(dadoTarefa)
-                result = "Sucesso" if nome_arquivo else "Falha"
-                resultados.append([nomeTarefa, result])
-        except:
-            resultados.append([nomeTarefa, 'Falha'])
+                nome_arquivo = validar_nome(dadoTarefa)
 
-        try:
             if nomeTarefa == 'Escrever':
                 texto = dadoTarefa
 
-                executar_tarefa(texto, nomeTarefa, nome_arquivo)
-                result = "Sucesso" if nome_arquivo else "Falha"
+                valid = executar_tarefa(texto, nomeTarefa, nome_arquivo)
+                result = "Sucesso" if valid else "Falha"
                 resultados.append([nomeTarefa, result])
-        except:
-            resultados.append([nomeTarefa, 'Falha'])
+                continue
 
-        try:
             if nomeTarefa == "Abrir":
                 abrir_arquivo(nome_arquivo)
-                result = "Sucesso" if nome_arquivo else "Falha"
+                result = "Sucesso" if valid else "Falha"
                 resultados.append([nomeTarefa, result])
+                break
+
+            result = "Sucesso" if nome_arquivo else "Falha"
+            resultados.append([nomeTarefa, result])
         except:
             resultados.append([nomeTarefa, 'Falha'])
 

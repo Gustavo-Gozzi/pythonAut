@@ -1,4 +1,4 @@
 Tarefa,Dado
-ValidarNome,"ORELHA"
-Escrever,"Olá, mundo!"
+ValidarNome,"Mensagem"
+Escrever,"Hello World!"
 Abrir,abrir
