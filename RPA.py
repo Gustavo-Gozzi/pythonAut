@@ -1,8 +1,11 @@
+# -- coding: utf-8�--
 import pandas as pd
 import pyautogui
 import time
 from openpyxl import Workbook
 import os
+from pathlib import Path
+import keyboard
 
 
 def ler_tarefas(caminhotarefa):
@@ -35,9 +38,9 @@ def executar_tarefa(valor, nomeTarefa, nome_arquivo):
 def abrir_arquivo(nome_arquivo):
     caminho_arquivo = os.path.abspath(nome_arquivo)
     pyautogui.hotkey('win', 'r')
-
+    print(caminho_arquivo)
     time.sleep(2)
-    pyautogui.write(caminho_arquivo)
+    keyboard.write(caminho_arquivo)
 
     time.sleep(2)
     pyautogui.press('enter')
